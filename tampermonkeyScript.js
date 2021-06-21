@@ -13,8 +13,9 @@
 
 const myScripts = `
   <script>
+    const getJunkInItems = () => items.filter(obj => (obj.type == "Junk" && obj.name != "Rope") || (obj.name.includes("Burnt") && obj.type == "Cooked Fish"))
     const getGemsInBank = () => bank.filter(obj => items[obj.id].type == "Gem")
-    const getJunkInBank = () => bank.filter(obj => items[obj.id].type == "Junk" || (items[obj.id].name.includes("Burnt") && items[obj.id].type == "Cooked Fish"))
+    const getJunkInBank = () => bank.filter(obj => (items[obj.id].type == "Junk" && items[obj.id].name != "Rope") || (items[obj.id].name.includes("Burnt") && items[obj.id].type == "Cooked Fish"))
 
     const sellItems = (items) => {
       if (!sellItemMode) {
