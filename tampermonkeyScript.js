@@ -13,9 +13,36 @@
 
 const myScripts = `
   <script>
+
+    let autoLightBonfire;
+
+    const getItemIDByName = (name) => {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].name == name) {
+          return i
+        }
+      }
+    }
+
+    const ropeID = getItemIDByName("Rope")
+    const bowstringID = getItemIDByName("Bowstring")
+
     const getJunkInItems = () => items.filter(obj => (obj.type == "Junk" && obj.name != "Rope") || (obj.name.includes("Burnt") && obj.type == "Cooked Fish"))
     const getGemsInBank = () => bank.filter(obj => items[obj.id].type == "Gem")
     const getJunkInBank = () => bank.filter(obj => (items[obj.id].type == "Junk" && items[obj.id].name != "Rope") || (items[obj.id].name.includes("Burnt") && items[obj.id].type == "Cooked Fish"))
+
+    const upgradeAllRopesToBowstring = () => confirmUpgradeItemAll(ropeID, bowstringID)
+
+    const doLightBonFire = () => bonfireBonus == 0 && lightBonfire()
+    
+    const toggleAutoLightBonFire = () => {
+      if (autoLightBonfire != null) {
+        clearInterval(autoLightBonfire)
+        autoLightBonfire = null
+      } else {
+        autoLightBonfire = setInterval(doLightBonFire, 1000)
+      }
+    }
 
     const sellItems = (items) => {
       if (!sellItemMode) {
@@ -39,6 +66,8 @@ const scriptUI = `
     <hr>
     <button onClick="sellItems(getJunkInBank())">Sell Junks</button>
     <button onClick="sellItems(getGemsInBank())">Sell Gems</button>
+    <button onClick="upgradeAllRopesToBowstring()">Upgrade ropes</button>
+    <button onClick="toggleAutoLightBonFire()">Toggle Auto Bonfire</button>
     <hr>
     <span>Author: <b>p0p3yee</b></span>
   </center>
