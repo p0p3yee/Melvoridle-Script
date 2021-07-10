@@ -15,6 +15,7 @@ const myScripts = `
   <script>
 
     let autoLightBonfire;
+    let autoLoot;
 
     const getItemIDByName = (name) => {
       for (var i = 0; i < items.length; i++) {
@@ -34,6 +35,15 @@ const myScripts = `
     const upgradeAllRopesToBowstring = () => confirmUpgradeItemAll(ropeID, bowstringID)
 
     const doLightBonFire = () => bonfireBonus == 0 && lightBonfire()
+
+    const toggleAutoLoot = () => {
+      if (autoLoot != null) {
+        clearInterval(autoLoot)
+        autoLoot = null
+      } else {
+        autoLoot = setInterval(lootAll, 1000 * 60)
+      }
+    }
     
     const toggleAutoLightBonFire = () => {
       if (autoLightBonfire != null) {
@@ -68,6 +78,7 @@ const scriptUI = `
     <button onClick="sellItems(getGemsInBank())">Sell Gems</button>
     <button onClick="upgradeAllRopesToBowstring()">Upgrade ropes</button>
     <button onClick="toggleAutoLightBonFire()">Toggle Auto Bonfire</button>
+    <button onClick="toggleAutoLoot()">Toggle Auto Loot</button>
     <hr>
     <span>Author: <b>p0p3yee</b></span>
   </center>
